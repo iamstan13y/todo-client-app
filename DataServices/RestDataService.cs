@@ -56,9 +56,32 @@ namespace Todo.Client.DataServices
             return;
         }   
 
-        public Task DeleteToDoAsync(int id)
+        public async Task DeleteToDoAsync(int id)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully Deleted ToDo");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response...");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"---> Whoops: {ex.Message}...");
+            }
+
+            return;
         }
 
         public async Task<List<ToDo>> GetAllToDosAsync()

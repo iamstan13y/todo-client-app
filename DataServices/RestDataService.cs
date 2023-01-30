@@ -116,9 +116,36 @@ namespace Todo.Client.DataServices
             return todos;
         }
 
-        public Task UpdateToDoAsync(ToDo toDo)
+        public async Task UpdateToDoAsync(ToDo toDo)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return;
+            }
+
+            try
+            {
+                string jsonToDo = JsonSerializer.Serialize<ToDo>(toDo, _jsonSerializerOptions);
+                StringContent content = new(jsonToDo, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/todo/{toDo.Id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("Successfully Updated ToDo");
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response...");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"---> Whoops: {ex.Message}...");
+            }
+
+            return;
         }
     }
 }

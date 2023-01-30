@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
 using Todo.Client.Models;
 
 namespace Todo.Client.DataServices
@@ -25,16 +26,43 @@ namespace Todo.Client.DataServices
         public Task AddToDoAsync(ToDo toDo)
         {
             throw new NotImplementedException();
-        }
+        }   
 
         public Task DeleteToDoAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<ToDo>> GetAllToDosAsync()
+        public async Task<List<ToDo>> GetAllToDosAsync()
         {
-            throw new NotImplementedException();
+            List<ToDo> todos = new();
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("---> No internet access...");
+                return todos;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"{_url}/todo");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    todos = JsonSerializer.Deserialize<List<ToDo>>(content, _jsonSerializerOptions);
+                }
+                else
+                {
+                    Debug.WriteLine("---> Non Http 2xx response...");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"---> Whoops: {ex.Message}...");
+            }
+
+            return todos;
         }
 
         public Task UpdateToDoAsync(ToDo toDo)

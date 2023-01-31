@@ -1,4 +1,5 @@
 ﻿using Todo.Client.DataServices;
+using Todo.Client.Pages;
 
 namespace Todo.Client;
 
@@ -18,7 +19,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IRestDataService, RestDataService>();
 
         builder.Services.AddSingleton<MainPage>();
-
+        builder.Services.AddTransient<ManageToDoPage>();
+        
         return builder.Build();
     }
 }

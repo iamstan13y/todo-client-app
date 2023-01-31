@@ -1,24 +1,32 @@
-﻿namespace Todo.Client;
+﻿using System.Diagnostics;
+using Todo.Client.DataServices;
+
+namespace Todo.Client;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
+    private readonly IRestDataService _dataService;
 
-    public MainPage()
+    public MainPage(IRestDataService dataService)
     {
         InitializeComponent();
+
+        _dataService = dataService;
     }
 
-    private void OnCounterClicked(object sender, EventArgs e)
+    protected async override void OnAppearing()
     {
-        count++;
+        base.OnAppearing();
+        collectionView.ItemsSource = await _dataService.GetAllToDosAsync(); 
+    }
 
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
+    async void OnAddToDoClicked(object sender, EventArgs e)
+    {
+        Debug.WriteLine("---> Add Button Clicked.");
+    }
 
-        SemanticScreenReader.Announce(CounterBtn.Text);
+    async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        Debug.WriteLine("---> Item Changed Clicked.");
     }
 }
-

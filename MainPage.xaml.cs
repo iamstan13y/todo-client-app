@@ -21,7 +21,7 @@ public partial class MainPage : ContentPage
     }
 
     async void OnAddToDoClicked(object sender, EventArgs e)
-    {
+    { 
         Debug.WriteLine("---> Add Button Clicked.");
     }
 

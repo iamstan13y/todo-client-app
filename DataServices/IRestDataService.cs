@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Todo.Client.Models;
+﻿using Todo.Client.Models;
 
 namespace Todo.Client.DataServices
 {

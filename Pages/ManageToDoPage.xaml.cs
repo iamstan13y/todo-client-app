@@ -43,7 +43,7 @@ public partial class ManageToDoPage : ContentPage
         {
             Debug.WriteLine("---> Add New Item.");
             await _dataService.AddToDoAsync(ToDo);
-        } 
+        }
         else
         {
             Debug.WriteLine("---> Add New Item.");

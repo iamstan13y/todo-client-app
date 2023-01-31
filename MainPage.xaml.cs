@@ -19,11 +19,11 @@ public partial class MainPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
-        collectionView.ItemsSource = await _dataService.GetAllToDosAsync(); 
+        collectionView.ItemsSource = await _dataService.GetAllToDosAsync();
     }
 
     async void OnAddToDoClicked(object sender, EventArgs e)
-    { 
+    {
         Debug.WriteLine("---> Add Button Clicked.");
 
         var navigationParameter = new Dictionary<string, object>

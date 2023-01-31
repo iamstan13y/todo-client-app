@@ -3,4 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Todo.Client.MainPage">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add ToDo" Clicked="OnAddToDoClicked" />
+    </ContentPage.ToolbarItems>
+
+    <CollectionView x:Name="collectionView"
+                    SelectionMode="Single"
+                    SelectionChanged="OnSelectionChanged">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Label Text="{Binding Name}" FontSize="Medium"/>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+    
 </ContentPage>

@@ -54,7 +54,7 @@ namespace Todo.Client.DataServices
             }
 
             return;
-        }   
+        }
 
         public async Task DeleteToDoAsync(int id)
         {

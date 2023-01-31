@@ -9,12 +9,19 @@
 
     <CollectionView x:Name="collectionView"
                     SelectionMode="Single"
-                    SelectionChanged="OnSelectionChanged">
+                    SelectionChanged="OnSelectionChanged"
+                    Margin="30,0,50,0">
+        
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+        </CollectionView.ItemsLayout>
+        
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Label Text="{Binding Name}" FontSize="Medium"/>
             </DataTemplate>
         </CollectionView.ItemTemplate>
+        
     </CollectionView>
     
 </ContentPage>
